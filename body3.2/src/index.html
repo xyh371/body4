@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="user">
+    <input type="text" class="pwd">
+    <button class="btn">点击</button><br>
+    <input type="text" name="" id="inp">
+    <script src="./js/ajax.js"></script>
+    <script>
+        // var user = document.querySelector('.user');
+        // var pwd = document.querySelector('.pwd');
+        // var btn = document.querySelector('.btn');
+        var inp = document.getElementById('inp');
+        // btn.onclick = function() {
+        //     ajax('user=' + user.value + '&pwd=' + pwd.value);
+        // };
+        // function ajax() {
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.onload = function() {
+        //         if (xhr.status >= 200 || xhr.status <= 300 && xhr.status === 304) {
+        //             var data = JSON.parse(xhr.responseText);
+        //             console.log(data);
+        //         }
+        //     }
+        //     xhr.open('post', '/api/index');
+        //     xhr.setRequestHeader('centent-type', 'application/x-www-form-urlencoded');
+        //     xhr.send();
+        // }
+
+        inp.oninput = function() {
+            var val = this.value;
+            ajax({
+                url: '/api/index',
+                data: val,
+                success: function(res) {
+                    console.log(res);
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
