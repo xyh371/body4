@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./fonts/iconfont.css">
+    <link rel="stylesheet" href="./swiper/swiper-4.1.6.min.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div>
+                <span>北京</span>
+                <i class="icon iconfont icon-xiangxia"></i>
+            </div>
+            <div>
+                <i class="icon iconfont icon-fangdajing"></i>
+                <input type="text" placeholder="输入商家/商品">
+            </div>
+            <div>
+                <p><i class="icon iconfont icon-wode"></i></p>
+                <p>我的</p>
+            </div>
+        </header>
+        <section class="sect">
+            <div class="box">
+                <div class="top">
+                    下拉刷新
+                </div>
+                <div class="logo">
+                    <img src="img/2.jpg" alt="">
+                    <div class="left">打开美团APP</div>
+                    <div class="right">下载App优惠大</div>
+                </div>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                        </div>
+                        <div class="swiper-slide">
+                            <dl>
+                                <dt><img src="img/1.png" alt=""></dt>
+                                <dd>美食</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <ul class="nav">
+                        <li class="active"></li>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="xian">
+                </div>
+                <div class="cai">
+                    猜你喜欢
+                </div>
+                <div class="tuwen">
+                    <div class="quanju">
+                        <div class="chil">
+                            <img src="img/2.png" alt="">
+                            <div class="dev">
+                                <span>全聚德</span>
+                                <p>[东城区]精品烤鸭3-4人餐1份</p>
+                                <p>
+                                    <span>398</span>
+                                    <i>元</i>
+                                    <span>门市价:498元</span>
+                                    <span>已售666份</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quanju">
+                        <div class="chil">
+                            <img src="img/2.png" alt="">
+                            <div class="dev">
+                                <span>全聚德</span>
+                                <p>[东城区]精品烤鸭3-4人餐1份</p>
+                                <p>
+                                    <span>398</span>
+                                    <i>元</i>
+                                    <span>门市价:498元</span>
+                                    <span>已售666份</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttom">
+                    下拉刷新
+                </div>
+            </div>
+        </section>
+        <footer>
+        </footer>
+    </div>
+    <script src="./swiper/swiper-4.1.6.min.js"></script>
+    <script src="./js/better-scroll.js"></script>
+    <script src="./js/flexible.js"></script>
+    <script src="./js/zepto.js"></script>
+    <script>
+        var mySwiper = new Swiper('.swiper-container', {});
+        var Bcsroll = new BScroll('.sect', {
+            click: true,
+            probeType: 2,
+        });
+        init();
+
+        function init() {
+            $.ajax({
+                url: '/api/index',
+                dataType: 'json',
+                success: function(rs) {
+                    var html = '';
+                    $.each(rs, function(i, v) {
+                        html += `<div class="quanju">
+                    <div class="chil">
+                        <img src="${v.img}" alt="">
+                        <div class="dev">
+                            <span>${v.txt}</span>
+                            <p>${v.tit}</p>
+                            <p>
+                                <span>${v.tie}</span>
+                                <i>${v.title}</i>
+                                <span>${v.text}</span>
+                                <span>${v.test}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>`
+                    });
+                    $(html).appendTo('.tuwen');
+                    Bcsroll.refresh();
+                }
+            })
+        }
+        Bcsroll.on('scroll', function() {
+            console.log(this.y);
+            if (this.y < this.maxScrollY - 70) {
+                $('.buttom').html('松手加载').addClass('add');
+            } else if (this.y > this.maxScrollY - 70) {
+                $('.buttom').html('上拉加载').removeClass('add');
+            } else if (this.y > 60) {
+                $('.top').html('松手刷新').addClass('add');
+            } else if (this.y < 60) {
+                $('.top').html('下拉刷新').addClass('add');
+            }
+        });
+        var page = 1;
+        Bcsroll.on('scrollEnd', function() {
+            if ($('.buttom').hasClass('add')) {
+                $('.buttom').removeClass('add');
+                page++;
+                if (page <= 3) {
+                    init();
+                }
+            }
+            if ($('.top').hasClass('add')) {
+                $('.top').hasClass('add');
+                $('.tuwen').html('');
+                page = 1;
+                init();
+            }
+        })
+    </script>
+</body>
+
+</html>
